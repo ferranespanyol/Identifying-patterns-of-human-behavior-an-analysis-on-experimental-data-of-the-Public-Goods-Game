@@ -2,7 +2,7 @@
 
 This repository is a collection of [Jupyter](https://jupyter.org/) notebooks (and one [R](https://www.r-project.org/) script) organized according the different chapters and sections of this study. Their fundamental objective is to help in the identification of behavior pattern of participants in a collective risk dilemma by means of data science methodologies. To fulfill this objective we propose the use of Machine Learning (ML) techniques to improve the identification of these patterns based on the characterization of groups of players that acted in much the same way. Folder "dades" contains all archives .csv with the data used in this study and "library_scripts" contains a Python library to run MAP-DP algorithm. 
 
-The whole code, until 31.08.2018, is the result of a final Master's Thesis of the [Master's Degree in Fundamental Principles of Data Science](http://www.ub.edu/estudis/en/mastersuniversitaris/cienciadades/introduction) supervised by Josep Perelló, PhD. The [Master's Thesis report](https://github.com/axelbrando/Mixture-Density-Networks-for-distribution-and-uncertainty-estimation/blob/master/ABrando-MDN-MasterThesis.pdf) is published in this repository in a PDF format. To summary all the contents I explained in the report, will be possible to consult the [slides of the presentation](). Any contribution or idea to continue the lines of the proposed work will be very welcome.
+The whole code, until 31.08.2018, is the result of a final Master's Thesis of the [Master's Degree in Fundamental Principles of Data Science](http://www.ub.edu/estudis/en/mastersuniversitaris/cienciadades/introduction) supervised by Josep Perelló, PhD. The [Master's Thesis report](https://github.com/ferranespanyol/Identifying-patterns-of-human-behavior-an-analysis-on-experimental-data-of-the-Public-Goods-Game/blob/master/FEspa%C3%B1ol-PGG-MasterThesis.pdf) is published in this repository in a PDF format. To summary all the contents I explained in the report, will be possible to consult the [slides of the presentation](). Any contribution or idea to continue the lines of the proposed work will be very welcome.
 
 ## Abstract of the report
 
@@ -78,7 +78,7 @@ author={Ferran Español},
 ```
 @misc{PGGFEspañolMasterThesis,
 title={Identifying patterns of human behavior: an analysis on experimental data of the Public Goods Game},
-url={https://github.com/axelbrando/Mixture-Density-Networks-for-distribution-and-uncertainty-estimation/blob/master/ABrando-MDN-MasterThesis.pdf},
+url={https://github.com/ferranespanyol/Identifying-patterns-of-human-behavior-an-analysis-on-experimental-data-of-the-Public-Goods-Game/blob/master/FEspa%C3%B1ol-PGG-MasterThesis.pdf},
 note={Report of the Master's Thesis: Identifying patterns of human behavior: an analysis on experimental data of the Public Goods Game.},
 author={Ferran Español},
   year={2018}
