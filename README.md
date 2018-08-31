@@ -5,21 +5,25 @@ This repository is a collection of [Jupyter](https://jupyter.org/) notebooks org
 The whole code, until 30.08.2018, is the result of a final Master's Thesis of the [Master's Degree in Fundamental Principles of Data Science](http://www.ub.edu/estudis/en/mastersuniversitaris/cienciadades/introduction) supervised by Josep Perelló, PhD. The [Master's Thesis report](https://github.com/axelbrando/Mixture-Density-Networks-for-distribution-and-uncertainty-estimation/blob/master/ABrando-MDN-MasterThesis.pdf) is published in this repository in a PDF format. To summary all the contents I explained in the report, will be possible to consult the [slides of the presentation](). Any contribution or idea to continue the lines of the proposed work will be very welcome.
 
 
-## Statistical and Machine Learning techniques
 
-> - 
+
+## Implemented tricks and techniques
+
+> - Classic statistical techniques. 
 > - Unsupervised clustering algorithms: K-Means, Agglomerative Clustering, DBSCAN and MAP-DP.
+> - Selection of the optimal number of clusters based on NbClust [Malika Charrad et al. 2006](https://www.researchgate.net/publication/275463140_Determining_the_number_of_clusters_using_NbClust_package)
+> - Supervised classification algorithms: Logistic Regression, Linear Discriminant Analysis, Naive Bayes, Decision Tree, K-Nearest Neighbors, Support Vector Machine.
 
 ## Some R libraries used
 
-> - fitdistrplus.
-> - NbClust.
+> - fitdistrplus
+> - NbClust
 > - cluster
 > - ineq
 
 ## Implemented visualisation functionalities
 
-> - Generic implementation to visualise mean and SE (as errorbar) of the most important variables of CRD.
+> - Generic implementation to visualise mean and SE (as errorbar) of the most important variables of the Collective-Risk Dilemma game..
 > - Generic implementation to visualise the clustering assignment on 2D using PCA.
 
 
@@ -70,22 +74,4 @@ author={Axel Brando},
   year={2017}
 }
 ```
-
-## License
-
-The content developed by Ferran Español is distributed under the following license:
-
-    Copyright 2016 Ferran Español
-
-    Licensed under the Apache License, Version 2.0 (the "License");
-    you may not use this file except in compliance with the License.
-    You may obtain a copy of the License at
-
-       http://www.apache.org/licenses/LICENSE-2.0
-
-    Unless required by applicable law or agreed to in writing, software
-    distributed under the License is distributed on an "AS IS" BASIS,
-    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-    See the License for the specific language governing permissions and
-    limitations under the License.
 
