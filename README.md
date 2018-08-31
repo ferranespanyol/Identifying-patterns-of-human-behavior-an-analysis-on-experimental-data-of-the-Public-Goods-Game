@@ -6,13 +6,19 @@ The whole code, until 30.08.2018, is the result of a final Master's Thesis of th
 
 
 
-
 ## Implemented tricks and techniques
 
 > - Classic statistical techniques. 
 > - Unsupervised clustering algorithms: K-Means, Agglomerative Clustering, DBSCAN and MAP-DP.
-> - Selection of the optimal number of clusters based on NbClust [Malika Charrad et al. 2006](https://www.researchgate.net/publication/275463140_Determining_the_number_of_clusters_using_NbClust_package)
+> - Selection of the optimal number of clusters based on NbClust ([Malika Charrad et al. 2006](https://www.researchgate.net/publication/275463140_Determining_the_number_of_clusters_using_NbClust_package))
 > - Supervised classification algorithms: Logistic Regression, Linear Discriminant Analysis, Naive Bayes, Decision Tree, K-Nearest Neighbors, Support Vector Machine.
+
+## Some Python libraries used
+
+> - sklearn
+> - scipy
+> - pandas
+> - collections
 
 ## Some R libraries used
 
