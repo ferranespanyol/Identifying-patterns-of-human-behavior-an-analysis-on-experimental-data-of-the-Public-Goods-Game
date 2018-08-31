@@ -1,8 +1,8 @@
 # Identifying patterns of human behavior: an analysis on experimental data of the Public Goods Game
 
-This repository is a collection of [Jupyter](https://jupyter.org/) notebooks organized according the different chapters and sections of this study. Their fundamental objective is to help in the identification of behavior pattern of participants in a collective risk dilemma by means of data science methodologies. To fulfill this objective we propose the use of Machine Learning (ML) techniques to improve the identification of these patterns based on the characterization of groups of players that acted in much the same way. 
+This repository is a collection of [Jupyter](https://jupyter.org/) notebooks (and one [R](https://www.r-project.org/) script) organized according the different chapters and sections of this study. Their fundamental objective is to help in the identification of behavior pattern of participants in a collective risk dilemma by means of data science methodologies. To fulfill this objective we propose the use of Machine Learning (ML) techniques to improve the identification of these patterns based on the characterization of groups of players that acted in much the same way. Folder "dades" contains all archives .csv with the data used in this study and "library_scripts" contains a Python library to run MAP-DP algorithm. 
 
-The whole code, until 30.08.2018, is the result of a final Master's Thesis of the [Master's Degree in Fundamental Principles of Data Science](http://www.ub.edu/estudis/en/mastersuniversitaris/cienciadades/introduction) supervised by Josep Perelló, PhD. The [Master's Thesis report](https://github.com/axelbrando/Mixture-Density-Networks-for-distribution-and-uncertainty-estimation/blob/master/ABrando-MDN-MasterThesis.pdf) is published in this repository in a PDF format. To summary all the contents I explained in the report, will be possible to consult the [slides of the presentation](). Any contribution or idea to continue the lines of the proposed work will be very welcome.
+The whole code, until 31.08.2018, is the result of a final Master's Thesis of the [Master's Degree in Fundamental Principles of Data Science](http://www.ub.edu/estudis/en/mastersuniversitaris/cienciadades/introduction) supervised by Josep Perelló, PhD. The [Master's Thesis report](https://github.com/axelbrando/Mixture-Density-Networks-for-distribution-and-uncertainty-estimation/blob/master/ABrando-MDN-MasterThesis.pdf) is published in this repository in a PDF format. To summary all the contents I explained in the report, will be possible to consult the [slides of the presentation](). Any contribution or idea to continue the lines of the proposed work will be very welcome.
 
 ## Abstract of the report
 
@@ -13,7 +13,8 @@ The whole code, until 30.08.2018, is the result of a final Master's Thesis of th
 
 > - Classic statistical techniques. 
 > - Unsupervised clustering algorithms: K-Means, Agglomerative Clustering, DBSCAN and MAP-DP.
-> - Selection of the optimal number of clusters based on NbClust ([Malika Charrad et al. 2006](https://www.researchgate.net/publication/275463140_Determining_the_number_of_clusters_using_NbClust_package))
+> - MAP-DP implementation based on [Yordan P. Raykov et al.](http://journals.plos.org/plosone/article/file?id=10.1371/journal.pone.0162259&type=printable) done by [Max Little] (http://www.maxlittle.net/software/).
+> - Selection of the optimal number of clusters based on NbClust ([Malika Charrad et al. 2006](https://www.researchgate.net/publication/275463140_Determining_the_number_of_clusters_using_NbClust_package)).
 > - Supervised classification algorithms: Logistic Regression, Linear Discriminant Analysis, Naive Bayes, Decision Tree, K-Nearest Neighbors, Support Vector Machine.
 
 ## Some Python libraries used
@@ -32,7 +33,7 @@ The whole code, until 30.08.2018, is the result of a final Master's Thesis of th
 
 ## Implemented visualisation functionalities
 
-> - Generic implementation to visualise mean and SE (as errorbar) of the most important variables of the Collective-Risk Dilemma game..
+> - Generic implementation to visualise mean and SE (as errorbar) of the most important variables of the Collective-Risk Dilemma game.
 > - Generic implementation to visualise the clustering assignment on 2D using PCA.
 
 
@@ -53,7 +54,7 @@ The whole code, until 30.08.2018, is the result of a final Master's Thesis of th
 
 ## Contributions
 
-Contributions are welcome!  For bug reports or requests please [submit an issue](https://github.com/axelbrando/Mixture-Density-Networks-for-distribution-and-uncertainty-estimation/issues).
+Contributions are welcome!  For bug reports or requests please [submit an issue](https://github.com/ferranespanyol/Identifying-patterns-of-human-behavior-an-analysis-on-experimental-data-of-the-Public-Goods-Game/issues).
 
 ## Contact  
 
