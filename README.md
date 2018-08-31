@@ -1,6 +1,6 @@
 # Identifying patterns of human behavior: an analysis on experimental data of the Public Goods Game
 
-This repository is a collection of [Jupyter](https://jupyter.org/) notebooks organized according the different chapters and sections of this study. It's major objective is to be useful in the identification of patterns in a collective risk dilemma experimental data. 
+This repository is a collection of [Jupyter](https://jupyter.org/) notebooks organized according the different chapters and sections of this study. The fundamental objective of them is to help in the identification of behavior pattern of participants in a collective risk dilemma by means of data science methodologies. To fulfill this objective we propose the use of Machine Learning (ML) techniques to improve the identification of these patterns based on the characterization of groups of players that acted in much the same way. 
 
 The whole code, until 30.08.2018, is the result of a final Master's Thesis of the [Master's Degree in Fundamental Principles of Data Science](http://www.ub.edu/estudis/en/mastersuniversitaris/cienciadades/introduction) supervised by Josep Perelló, PhD. The [Master's Thesis report](https://github.com/axelbrando/Mixture-Density-Networks-for-distribution-and-uncertainty-estimation/blob/master/ABrando-MDN-MasterThesis.pdf) is published in this repository in a PDF format. To summary all the contents I explained in the report, will be possible to consult the [slides of the presentation](). Any contribution or idea to continue the lines of the proposed work will be very welcome.
 
@@ -61,23 +61,23 @@ Feel free to contact me to discuss any issues, questions or comments.
 
 ### BibTex reference format for citation for the Code
 ```
-@misc{MDNABrando,
-title={Mixture Density Networks (MDN) for distribution and uncertainty estimation},
-url={https://github.com/axelbrando/Mixture-Density-Networks-for-distribution-and-uncertainty-estimation/},
-note={GitHub repository with a collection of Jupyter notebooks intended to solve a lot of problems related to MDN.},
-author={Axel Brando},
-  year={2017}
+@misc{PGGFEspañolMasterThesis,
+title={Identifying patterns of human behavior: an analysis on experimental data of the Public Goods Game (PGG)},
+url={https://github.com/ferranespanyol/Identifying-patterns-of-human-behavior-an-analysis-on-experimental-data-of-the-Public-Goods-Game},
+note={GitHub repository with a collection of Jupyter notebooks intended to identify patterns in a PGG.},
+author={Ferran Español},
+  year={2018}
 }
 ```
 ### BibTex reference format for citation for the report of the Master's Thesis
 
 ```
-@misc{MDNABrandoMasterThesis,
-title={Mixture Density Networks (MDN) for distribution and uncertainty estimation},
+@misc{PGGFEspañolMasterThesis,
+title={Identifying patterns of human behavior: an analysis on experimental data of the Public Goods Game},
 url={https://github.com/axelbrando/Mixture-Density-Networks-for-distribution-and-uncertainty-estimation/blob/master/ABrando-MDN-MasterThesis.pdf},
-note={Report of the Master's Thesis: Mixture Density Networks for distribution and uncertainty estimation.},
-author={Axel Brando},
-  year={2017}
+note={Report of the Master's Thesis: Identifying patterns of human behavior: an analysis on experimental data of the Public Goods Game.},
+author={Ferran Español},
+  year={2018}
 }
 ```
 

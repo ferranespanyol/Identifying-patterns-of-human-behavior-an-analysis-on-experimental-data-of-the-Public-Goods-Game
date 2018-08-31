@@ -566,3 +566,297 @@ coef(fit1,s=0.01) # extract coefficients at a single value of lambda
 
 plot(fit1)
 
+
+## Fucntions used along the analysis.
+
+contributions.round <- function(userronda, players, ngames,user_ds) {
+  col <- rep(seq(1,10,length=10), each=players,times=ngames)
+  contrib <- userronda[c("seleccio","ronda_id", "user_id")]
+  contrib["ronda_id"]<- col
+  res <- reshape(contrib, timevar = "ronda_id", idvar = "user_id", direction = "wide")
+  res$mean_contr = rowMeans(res[,2:11], na.rm = FALSE, dims = 1)
+  res$partida <- user_ds[c('partida_id')]
+  contributions <- transform(res, SD=apply(res[,2:11],1, sd, na.rm = TRUE))
+}
+
+
+estBetaParams <- function(mu, var) {
+  alpha <- ((1 - mu) / var - 1 / mu) * mu ^ 2
+  beta <- alpha * (1 / mu - 1)
+  return(params = list(alpha = alpha, beta = beta))
+}
+
+create.variables <- function(contr_ds){
+  mean_contr_round <- ddply(contr_ds[,c(2:11,13)], .(partida), numcolwise(mean))
+  nameVec <- gsub("seleccio","mean",names(mean_contr_round))
+  setnames(mean_contr_round, names(mean_contr_round),nameVec)
+  View(mean_contr_round)
+  View(contr_ds)
+  #merge mean_contr_round amb contr_ds
+  ds <- merge(contr_ds,mean_contr_round, by="partida")
+  # Respect the same round mean
+  ds = within(ds, {
+    comp_mean10 = ifelse(ds$seleccio.10>=ds$mean.10, 1, 0)
+    comp_mean9 = ifelse(ds$seleccio.9>=ds$mean.9, 1, 0)
+    comp_mean8 = ifelse(ds$seleccio.8>=ds$mean.8, 1, 0)
+    comp_mean7 = ifelse(ds$seleccio.7>=ds$mean.7, 1, 0)
+    comp_mean6 = ifelse(ds$seleccio.6>=ds$mean.6, 1, 0)
+    comp_mean5 = ifelse(ds$seleccio.5>=ds$mean.5, 1, 0)
+    comp_mean4 = ifelse(ds$seleccio.4>=ds$mean.4, 1, 0)
+    comp_mean3 = ifelse(ds$seleccio.3>=ds$mean.3, 1, 0)
+    comp_mean2 = ifelse(ds$seleccio.2>=ds$mean.2, 1, 0)
+    comp_mean1 = ifelse(ds$seleccio.1>=ds$mean.1, 1, 0)
+  })
+  # According last round mean
+  ds = within(ds, {
+    comp_last_mean10 = ifelse(ds$seleccio.10>=ds$mean.9 , 1, 0)
+    comp_last_mean9 = ifelse(ds$seleccio.9>=ds$mean.8, 1, 0)
+    comp_last_mean8 = ifelse(ds$seleccio.8>=ds$mean.7, 1, 0)
+    comp_last_mean7 = ifelse(ds$seleccio.7>=ds$mean.6, 1, 0)
+    comp_last_mean6 = ifelse(ds$seleccio.6>=ds$mean.5, 1, 0)
+    comp_last_mean5 = ifelse(ds$seleccio.5>=ds$mean.4, 1, 0)
+    comp_last_mean4 = ifelse(ds$seleccio.4>=ds$mean.3, 1, 0)
+    comp_last_mean3 = ifelse(ds$seleccio.3>=ds$mean.2, 1, 0)
+    comp_last_mean2 = ifelse(ds$seleccio.2>=ds$mean.1, 1, 0)
+  })
+  
+  #Full conditional cooperation
+  ds = within(ds, {
+    cond_coop10 = ifelse(ds$seleccio.10>=ds$mean.9 & ds$seleccio.9<=ds$mean.9 | ds$seleccio.10<=ds$mean.9 & ds$seleccio.9>=ds$mean.9, 1, 0)
+    cond_coop9 = ifelse(ds$seleccio.9>=ds$mean.8 & ds$seleccio.8<=ds$mean.8 | ds$seleccio.9<=ds$mean.8 & ds$seleccio.8>=ds$mean.8, 1, 0)
+    cond_coop8 = ifelse(ds$seleccio.8>=ds$mean.7 & ds$seleccio.7<=ds$mean.7 | ds$seleccio.8<=ds$mean.7 & ds$seleccio.7>=ds$mean.7, 1, 0)
+    cond_coop7 = ifelse(ds$seleccio.7>=ds$mean.6 & ds$seleccio.6<=ds$mean.6 | ds$seleccio.7<=ds$mean.6 & ds$seleccio.6>=ds$mean.6, 1, 0)
+    cond_coop6 = ifelse(ds$seleccio.6>=ds$mean.5 & ds$seleccio.5<=ds$mean.5 | ds$seleccio.6<=ds$mean.5 & ds$seleccio.5>=ds$mean.5, 1, 0)
+    cond_coop5 = ifelse(ds$seleccio.5>=ds$mean.4 & ds$seleccio.4<=ds$mean.4 | ds$seleccio.5<=ds$mean.4 & ds$seleccio.4>=ds$mean.4, 1, 0)
+    cond_coop4 = ifelse(ds$seleccio.4>=ds$mean.3 & ds$seleccio.3<=ds$mean.3 | ds$seleccio.4<=ds$mean.3 & ds$seleccio.3>=ds$mean.3, 1, 0)
+    cond_coop3 = ifelse(ds$seleccio.3>=ds$mean.2 & ds$seleccio.2<=ds$mean.2 | ds$seleccio.3<=ds$mean.2 & ds$seleccio.2>=ds$mean.2, 1, 0)
+    cond_coop2 = ifelse(ds$seleccio.2>=ds$mean.1 & ds$seleccio.1<=ds$mean.1 | ds$seleccio.2<=ds$mean.1 & ds$seleccio.1>=ds$mean.1, 1, 0)
+  })
+  #FREE RIDING  
+  ds = within(ds, {
+    free_10 = ifelse(ds$seleccio.10==0, 1, 0)
+    free_9 = ifelse(ds$seleccio.9==0, 1, 0)
+    free_8 = ifelse(ds$seleccio.8==0, 1, 0)
+    free_7 = ifelse(ds$seleccio.7==0, 1, 0)
+    free_6 = ifelse(ds$seleccio.6==0, 1, 0)
+    free_5 = ifelse(ds$seleccio.5==0, 1, 0)
+    free_4 = ifelse(ds$seleccio.4==0, 1, 0)
+    free_3 = ifelse(ds$seleccio.3==0, 1, 0)
+    free_2 = ifelse(ds$seleccio.2==0, 1, 0)
+    free_1 = ifelse(ds$seleccio.1==0, 1, 0)
+  })
+  return(ds)
+}
+
+
+
+### STRATEGY 1 : CONDITIONAL COOPERATION ####
+#Nombre de vegades que tenim cooperació condicional
+
+conditional.cooperation <- function(ds,name){
+  print(name)
+  #par(mfrow=c(1,2))
+  layout(1:1)
+  ds_cond_coop <- ds
+  ds_cond_coop$cond_coop <- apply(ds_cond_coop,1,mean)
+  
+  #Basic statistics for conditional cooperation
+  print(summary(ds_cond_coop$cond_coop))
+  mu_ds <- mean(ds_cond_coop$cond_coop)
+  var_ds <- var(ds_cond_coop$cond_coop)
+  #computation of the standard error of the mean
+  sem<-sd(ds_cond_coop$cond_coop)/sqrt(length(ds_cond_coop$cond_coop))
+  #95% confidence intervals of the mean
+  
+  print("Confidence Inteval")
+  print(c(mean(ds_cond_coop$cond_coop)-2*sem,mean(ds_cond_coop$cond_coop)+2*sem))
+  
+  #Normality test
+  layout(1:1)
+  descdist(ds_cond_coop$cond_coop, discrete = FALSE)
+  fit.norm <- fitdist(ds_cond_coop$cond_coop, "norm")
+  plot(fit.norm)
+  
+  #The best model that can fit this distribution is a beta-distribution
+  #La millor distribució és una distribució beta, la forma concreta:
+  params = estBetaParams(mu_ds,var_ds)
+  
+  #Plot the best fit distribution
+  layout(1:1)
+  x<- ds_cond_coop$cond_coop
+  x.sub <- subset(ds_cond_coop, cond_coop > 0.9)
+  print("Users with higher conditional cooperation moves:")
+  print(x.sub)
+  hist(x, breaks=10, probability=TRUE, c="cyan", main="",xlab="% of conditional cooperators")
+  lines(seq(0,1,length=100), dbeta(x=seq(0,1,length=100), params$alpha, params$beta), col="blue")
+  lines(density(x), lty=2)
+  legend("topright",legend=c("Beta Distribution","Direct adjust"),lwd=3.0,col=c("blue","black"))
+}
+
+
+### STRATEGY 2 : Last Mean ####
+#Nombre de vegades que tenim last mean strategy
+#quan mirem si la contribució ha estat superior o inferior a la mitja anterior estem evaluant 
+#la reciprocitat. 
+
+last.mean <- function(ds,name){
+  print(name)
+  ds_comp_last <- ds
+  ds_comp_last$coop_cond <- apply(ds_comp_last,1,mean)
+  
+  #Basic statistics for last mean
+  print(summary(ds_comp_last$coop_cond))
+  mu_ds <- mean(ds_comp_last$coop_cond)
+  var_ds <- var(ds_comp_last$coop_cond)
+  #computation of the standard error of the mean
+  sem<-sd(ds_comp_last$coop_cond)/sqrt(length(ds_comp_last$coop_cond))
+  #95% confidence intervals of the mean
+  print("Confidence Interval:")
+  print(c(mean(ds_comp_last$coop_cond)-2*sem,mean(ds_comp_last$coop_cond)+2*sem))
+  
+  #Normality tests
+  layout(1:1)
+  descdist(ds_comp_last$coop_cond, discrete = FALSE)
+  fit.norm <- fitdist(ds_comp_last$coop_cond, "norm")
+  plot(fit.norm)
+  #Again, the best fit is a beta distribution with parameters:
+  params = estBetaParams(mu_ds,var_ds)
+  
+  layout(1:1)
+  x2<- ds_comp_last$coop_cond
+  hist(x2, breaks=10, probability=TRUE, c="cyan", main=("% Last mean"),xlab="% of use of the strategy")
+  lines(seq(0,1,length=100), dbeta(x=seq(0,1,length=100), params$alpha, params$beta), col="blue")
+  lines(density(x2), lty=2)
+  legend("topright",legend=c("Beta Distribution","Direct adjust"),lwd=3.0,col=c("blue","black"))
+}
+
+# STRATEGY 3: FREE RIDING
+
+free.riding <- function(ds,name){
+  print(name)
+  layout(1:1)
+  ds_free <- ds
+  ds_free$cond_free <- apply(ds_free,1,mean)
+  
+  #Basic statistics for conditional cooperation
+  print(summary(ds_free$cond_free))
+  mu_ds <- mean(ds_free$cond_free)
+  var_ds <- var(ds_free$cond_free)
+  #computation of the standard error of the mean
+  sem<-sd(ds_free$cond_free)/sqrt(length(ds_free$cond_free))
+  #95% confidence intervals of the mean
+  print("Confidence interval")
+  print(c(mean(ds_free$cond_free)-2*sem,mean(ds_free$cond_free)+2*sem))
+  
+  #Normality test
+  layout(1:1)
+  descdist(ds_free$cond_free, discrete = FALSE)
+  fit.norm <- fitdist(ds_free$cond_free, "norm")
+  plot(fit.norm)
+  
+  #The best model that can fit this distribution is a beta-distribution
+  #La millor distribució és una distribució beta, la forma concreta:
+  params = estBetaParams(mu_ds,var_ds)
+  
+  #Plot the best fit distribution
+  layout(1:1)
+  x3<- ds_free$cond_free
+  hist(x3, breaks=10, probability=TRUE, c="cyan", main="Free riding",xlab="% of uses of this strategy")
+  lines(seq(0,1,length=100), dbeta(x=seq(0,1,length=100), params$alpha, params$beta), col="blue")
+  lines(density(x3), lty=2)
+  legend("topright",legend=c("Beta Distribution","Direct adjust"),lwd=3.0,col=c("blue","black"))
+}
+
+
+# DAU: 
+#Create the dataset with the new dummy variables: 
+
+## For ALL games
+dau = create.variables(contr_dau)
+names(user_dau)[names(user_dau) == 'id'] <- 'user_id'
+dau_dataset <- merge(dau, user_dau, by='user_id')
+
+dau_same_mean <- dau_dataset[,25:34]
+dau_last_mean <- dau_dataset[,35:43]
+dau_cond_coop <- dau_dataset[,44:52]
+dau_free_riding <- dau_dataset[,53:62]
+
+conditional.cooperation(dau_cond_coop,"DAU")
+table(apply(dau_cond_coop,1,sum))
+
+last.mean(dau_last_mean,"DAU")
+table(apply(dau_last_mean,1,sum))
+
+free.riding(dau_free_riding,"DAU")
+table(apply(dau_free_riding,1,sum))
+hist(table(apply(dau_free_riding,1,sum)), breaks=10, probability=TRUE, c="cyan", main="Free riding",xlab="% of uses of this strategy")
+barplot(table(apply(dau_free_riding,1,sum)), main="DAU", col = "cyan",
+        xlab="Times free riding")
+
+# STREET: 
+#Create the dataset with the new dummy variables: 
+
+## For ALL games = Unquality Games
+street = create.variables(contr_street_norm)
+
+street_same_mean <- street[,25:34]
+street_last_mean <- street[,35:43]
+street_cond_coop <- street[,44:52]
+street_free_riding <- street[,53:62]
+
+#Strategy 1: Conditional Cooperation
+conditional.cooperation(street_cond_coop,"STREET")
+table(apply(street_cond_coop,1,sum))
+
+#Strategy 2: Last mean
+last.mean(street_last_mean,"STREET")
+table(apply(street_last_mean,1,sum))
+
+#Strategy 3: Free Riding
+free.riding(street_free_riding,"STREET")
+table(apply(street_free_riding,1,sum))
+barplot(table(apply(street_free_riding,1,sum)), main="STREET", col = "cyan",
+        xlab="Times free riding")
+
+# VILADECANS: 
+#Create the dataset with the new dummy variables: 
+
+## For ALL games = Equality Games
+vil = create.variables(contr_vil)
+
+vil_same_mean <- vil[,25:34]
+vil_last_mean <- vil[,35:43]
+vil_cond_coop <- vil[,44:52]
+vil_free_riding <- vil[,53:62]
+
+#Strategy 1: Conditional Cooperation
+conditional.cooperation(vil_cond_coop,"VIL")
+table(apply(vil_cond_coop,1,sum))
+
+#Strategy 2: Last mean
+last.mean(vil_last_mean,"VIL")
+table(apply(vil_last_mean,1,sum))
+
+#Strategy 3: Free Riding
+free.riding(vil_free_riding,"VIL")
+table(apply(vil_free_riding,1,sum))
+barplot(table(apply(vil_free_riding,1,sum)), main="VIL", col = "cyan",
+        xlab="Times free riding")
+
+
+## Prepare demographic variables: 
+
+### STRATEGY 4: DIFFERENCES IN GENRE ACTIONS #### 
+
+print(dau)
+ds_cond_coop <- ds[,44:52]
+print(ds_cond_coop)
+print()
+ds_cond_coop$cond_coop <- apply(ds_cond_coop,1,mean)
+
+dau = create.variables(contr_dau)
+
+dau_same_mean <- dau[,25:34]
+dau_last_mean <- dau[,35:43]
+dau_cond_coop <- dau[,44:52]
+dau_free_riding <- dau[,53:62]
